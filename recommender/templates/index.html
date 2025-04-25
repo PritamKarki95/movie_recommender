@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FictionWIKI</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-film"></i> FictionWIKI</h1>
+            <p>Discover your next favorite movie based on your preferences</p>
+        </header>
+
+        <section class="preference-form">
+            <h2>Your Preferences</h2>
+            <form id="movie-preferences">
+                <div class="form-group">
+                    <label for="actor"><i class="fas fa-user-alt"></i> Actor/Cast</label>
+                    <input type="text" id="actor" name="actor" placeholder="e.g., Tom Hanks, Emma Stone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="genre"><i class="fas fa-theater-masks"></i> Genre</label>
+                    <select id="genre" name="genre">
+                        <option value="">Select a genre</option>
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="drama">Drama</option>
+                        <option value="horror">Horror</option>
+                        <option value="sci-fi">Science Fiction</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="romance">Romance</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="animation">Animation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="language"><i class="fas fa-language"></i> Language</label>
+                    <select id="language" name="language">
+                        <option value="">Select a language</option>
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="korean">Korean</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="german">German</option>
+                        <option value="italian">Italian</option>
+                        <option value="chinese">Chinese</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reference-movie"><i class="fas fa-video"></i> Reference Movie</label>
+                    <input type="text" id="reference-movie" name="reference-movie" placeholder="e.g., The Shawshank Redemption">
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-search"></i> Find Recommendations
+                </button>
+            </form>
+        </section>
+
+        <section class="recommendations">
+            <h2>Recommended Movies</h2>
+            <p class="initial-message">Movies So Good, You’ll Hit Play Again.</p>
+            
+            <div class="movie-grid" id="movie-results">
+                <!-- Movie cards will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FictionWIKI | We got your Taste <i class="fas fa-heart"></i></p>
+    </footer>
+
+    <script>
+        const form = document.getElementById("movie-preferences");
+        const movieListContainer = document.getElementById("movie-results");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const actor = document.getElementById("actor").value;
+            const genre = document.getElementById("genre").value;
+            const language = document.getElementById("language").value;
+            const referenceMovie = document.getElementById("reference-movie").value;
+
+            const url = `http://127.0.0.1:8000/recommend/?crew=${actor}&genre=${genre}&language=${language}&name=${referenceMovie}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const recommendations = data.recommendations;
+
+                    movieListContainer.innerHTML = '';
+
+                    recommendations.forEach(movie => {
+                    const movieElement = document.createElement('div');
+                    movieElement.classList.add('movie-card');
+                    movieElement.innerHTML = `
+                    <div class="movie-poster">
+                    <img src="${movie.poster}" alt="${movie.title}">
+                    </div>
+                    <div class="movie-info">
+                    <h3>${movie.title}</h3>
+                    <p><strong>Rating:</strong> ⭐ ${movie.rating}</p>
+                    <p><strong>Crew:</strong> ${movie.crew}</p>
+                    <p><strong>Genre:</strong> ${genre}</p>
+                    <p><strong>Language:</strong> ${language}</p>
+                   </div>
+                 `;
+                movieListContainer.appendChild(movieElement);
+                });
+
+                })
+                .catch(error => {
+                    console.error('Error fetching recommendations:', error);
+                });
+        });
+    </script>
+</body>
+</html>
