@@ -12,10 +12,10 @@ Original Language
 
 Reference Movie
 
-🧠 Machine Learning with Content-Based Filtering (scikit-learn)
+## 🧠 Machine Learning with Content-Based Filtering (scikit-learn)
 
 
-🌐 TMDB API integration for:
+## 🌐 TMDB API integration for:
 
 Movie posters
 
@@ -25,9 +25,9 @@ Details
 
 
 
-💻 Frontend built with HTML, CSS, and JavaScript
+## 💻 Frontend built with HTML, CSS, and JavaScript
 
-🔗 Backend handled with Django (Python)
+## 🔗 Backend handled with Django (Python)
 
 ## ⚙️ Installation
 1. Clone the repo
