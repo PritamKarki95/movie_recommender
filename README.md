@@ -29,7 +29,7 @@ Details
 
 🔗 Backend handled with Django (Python)
 
-⚙️ Installation
+## ⚙️ Installation
 1. Clone the repo
 git clone 
 cd movie-recommendation-system
