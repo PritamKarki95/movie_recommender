@@ -14,6 +14,7 @@ Reference Movie
 
 🧠 Machine Learning with Content-Based Filtering (scikit-learn)
 
+
 🌐 TMDB API integration for:
 
 Movie posters
@@ -21,6 +22,8 @@ Movie posters
 Ratings
 
 Details
+
+
 
 💻 Frontend built with HTML, CSS, and JavaScript
 
